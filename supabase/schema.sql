@@ -799,6 +799,13 @@ grant execute on function public.update_stock_movement_metadata(bigint, timestam
 grant execute on function public.delete_stock_movement(bigint) to authenticated;
 grant execute on function public.get_in_out_series(timestamptz, timestamptz, bigint, text) to authenticated;
 grant execute on function public.get_current_stocks() to authenticated;
+grant select, insert, update on table public.products to authenticated;
+grant select, insert, update on table public.categories to authenticated;
+grant usage, select on sequence public.products_id_seq to authenticated;
+grant usage, select on sequence public.categories_id_seq to authenticated;
+
+alter view public.v_stock_movements_export set (security_invoker = true);
+alter view public.v_stock_movements_signed set (security_invoker = true);
 
 -- 10.1) Privilege hardening (recommended)
 -- Prevent direct writes from client; force business operations through RPC.
